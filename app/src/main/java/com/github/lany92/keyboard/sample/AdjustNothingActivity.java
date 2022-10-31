@@ -31,6 +31,7 @@ public class AdjustNothingActivity extends AppCompatActivity {
                 .setOnKeyboardListener(new OnKeyboardListener() {
                     @Override
                     public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
+                        //ADJUST_NOTHING模式不能有效监测键盘变化
                         ((TextView) findViewById(R.id.show2)).setText("ImmersionBar:isPopup：" + isPopup + "，keyboardHeight:" + keyboardHeight);
                     }
                 })
