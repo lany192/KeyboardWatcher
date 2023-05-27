@@ -1,6 +1,6 @@
 [![](https://jitpack.io/v/lany192/KeyboardWatcher.svg)](https://jitpack.io/#lany192/KeyboardWatcher)
 
-现有很多方法是通过监听布局的变化来计算输入法键盘高度，这个的前提是在Activity的配置中配置为"android:windowSoftInputMode="adjustResize""
+现有很多方法是通过监听布局的变化来计算输入法键盘高度，前提是在Activity的配置中配置为"android:windowSoftInputMode="adjustResize""
 
 如果Activity配置为"android:windowSoftInputMode="adjustNothing""或者其他属性时，这种方式会失效或者算不准。
 

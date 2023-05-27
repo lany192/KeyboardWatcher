@@ -1,13 +1,17 @@
 package com.github.lany92.keyboard.sample;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+import android.view.WindowManager;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.lany92.keyboard.KeyboardWatcher;
+import com.gyf.immersionbar.ImmersionBar;
+import com.gyf.immersionbar.OnKeyboardListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         new KeyboardWatcher(this, new KeyboardWatcher.OnKeyboardListener() {
             @Override
             public void onChanged(boolean showKeyboard, int height) {
-                Toast.makeText(MainActivity.this, "showKeyboard：" + showKeyboard + "，height:" + height, Toast.LENGTH_SHORT).show();
+                ((TextView) findViewById(R.id.show1)).setText("KeyboardWatcher:showKeyboard：" + showKeyboard + "，height:" + height);
             }
         });
         findViewById(R.id.adjustNothing).setOnClickListener(new View.OnClickListener() {
@@ -39,5 +43,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AdjustPanActivity.class));
             }
         });
+        ImmersionBar.with(this)
+                .supportActionBar(true)
+                .barColorInt(Color.BLUE)
+                .keyboardEnable(true)
+                .keyboardMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_UNSPECIFIED)
+                .setOnKeyboardListener(new OnKeyboardListener() {
+                    @Override
+                    public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
+                        ((TextView) findViewById(R.id.show2)).setText("ImmersionBar:isPopup：" + isPopup + "，keyboardHeight:" + keyboardHeight);
+                    }
+                })
+                .init();
     }
 }
