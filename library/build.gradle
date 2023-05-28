@@ -25,6 +25,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -37,7 +43,10 @@ afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
-                from components.release
+                components.getByName('release')
+                groupId = 'com.github.lany92'
+                artifactId = 'KeyboardWatcher'
+                version = '1.0.0'
                 pom {
                     licenses {
                         license {
