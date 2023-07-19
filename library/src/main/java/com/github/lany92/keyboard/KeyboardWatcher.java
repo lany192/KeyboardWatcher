@@ -9,10 +9,15 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.PopupWindow;
 
+import androidx.activity.ComponentActivity;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+
 /**
  * 检测键盘弹出与收起，计算键盘当前高度
  */
-public class KeyboardWatcher extends PopupWindow implements OnGlobalLayoutListener {
+public class KeyboardWatcher extends PopupWindow implements OnGlobalLayoutListener, DefaultLifecycleObserver {
     //PopupWindow的布局视图
     private final View rootView;
     //键盘监听器回调
@@ -29,6 +34,10 @@ public class KeyboardWatcher extends PopupWindow implements OnGlobalLayoutListen
         setContentView(rootView);
         // 监听PopupWindow Layout变化
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
+        //监听界面生命周期
+        if (activity instanceof ComponentActivity) {
+            ((ComponentActivity) activity).getLifecycle().addObserver(this);
+        }
         setBackgroundDrawable(new ColorDrawable(0));
 
         // 设置宽度为0，高度为全屏,不显示
@@ -62,6 +71,11 @@ public class KeyboardWatcher extends PopupWindow implements OnGlobalLayoutListen
                 listener.onChanged(height > 0, height);
             }
         }
+    }
+
+    @Override
+    public void onDestroy(@NonNull LifecycleOwner owner) {
+        dismiss();
     }
 
     public interface OnKeyboardListener {
